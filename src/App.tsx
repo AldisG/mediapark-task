@@ -3,6 +3,8 @@ import { amber, grey } from "@mui/material/colors";
 import { ThemeProvider } from "@emotion/react";
 import { motion } from "framer-motion";
 import Home from "./components/Home";
+import axios from "axios";
+import { useEffect } from "react";
 
 const initialLoad = {
   start: { opacity: 0 },
@@ -10,9 +12,24 @@ const initialLoad = {
 };
 
 const testKey = process.env.REACT_APP_API_KEY;
+// npm i --save unsplash-js
 
+// import { createApi } from 'unsplash-js';
+// import nodeFetch from 'node-fetch';
+
+// const unsplash = createApi({
+//   accessKey: 'MY_ACCESS_KEY',
+//   fetch: nodeFetch,
+// });
 const App = () => {
-  console.log(testKey);
+  // useEffect(() => {
+  //   axios
+  //     .get(
+  //       "https://api.unsplash.com/photos/" + process.env.REACT_APP_ACCESS_KEY
+  //     )
+  //     .then((res) => console.log(res));
+  // }, []);
+
   const theme = createTheme({
     palette: {
       primary: {
@@ -24,8 +41,6 @@ const App = () => {
     },
   });
 
-  const test = process.env.REACT_APP_API_URL;
-
   return (
     <ThemeProvider theme={theme}>
       <motion.div
@@ -34,7 +49,6 @@ const App = () => {
         animate={initialLoad.end}
         className="App"
       >
-        <div className="App">env: {test}...</div>
         <Home />
       </motion.div>
     </ThemeProvider>
