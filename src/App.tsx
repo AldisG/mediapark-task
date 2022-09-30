@@ -2,9 +2,11 @@ import { createTheme } from "@mui/material/styles";
 import { amber, grey } from "@mui/material/colors";
 import { ThemeProvider } from "@emotion/react";
 import { motion } from "framer-motion";
-import Home from "./components/Home";
+import Header from "./components/Header";
 import axios from "axios";
 import { useEffect } from "react";
+import GallerySection from "./components/GallerySection";
+import SearchForm from "./components/SearchForm";
 
 const initialLoad = {
   start: { opacity: 0 },
@@ -49,7 +51,9 @@ const App = () => {
         animate={initialLoad.end}
         className="App"
       >
-        <Home />
+        <Header />
+        <SearchForm />
+        <GallerySection />
       </motion.div>
     </ThemeProvider>
   );
