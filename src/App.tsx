@@ -3,8 +3,8 @@ import { amber, grey } from "@mui/material/colors";
 import { ThemeProvider } from "@emotion/react";
 import { motion } from "framer-motion";
 import Header from "./components/Header";
-// import axios from "axios";
-// import { useEffect } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import GallerySection from "./components/GallerySection";
 import SearchForm from "./components/SearchForm";
 
@@ -24,14 +24,16 @@ const initialLoad = {
 //   fetch: nodeFetch,
 // });
 const App = () => {
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       "https://api.unsplash.com/photos/" + process.env.REACT_APP_ACCESS_KEY
-  //     )
-  //     .then((res) => console.log(res));
-  // }, []);
-
+  const [data, setData] = useState();
+  useEffect(() => {
+    axios
+      .get(
+        "https://api.unsplash.com/photos/?client_id=" +
+          process.env.REACT_APP_ACCESS_KEY
+      )
+      .then(({ data }) => setData(data));
+  }, []);
+  console.log(data);
   const theme = createTheme({
     palette: {
       primary: {
