@@ -3,8 +3,8 @@ import { amber, grey } from "@mui/material/colors";
 import { ThemeProvider } from "@emotion/react";
 import { motion } from "framer-motion";
 import Header from "./components/Header";
-import axios from "axios";
-import { useEffect } from "react";
+// import axios from "axios";
+// import { useEffect } from "react";
 import GallerySection from "./components/GallerySection";
 import SearchForm from "./components/SearchForm";
 
@@ -13,7 +13,7 @@ const initialLoad = {
   end: { opacity: 1 },
 };
 
-const testKey = process.env.REACT_APP_API_KEY;
+// const testKey = process.env.REACT_APP_API_KEY;
 // npm i --save unsplash-js
 
 // import { createApi } from 'unsplash-js';

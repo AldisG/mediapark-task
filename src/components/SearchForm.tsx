@@ -19,6 +19,9 @@ const SearchForm = () => {
   ) => {
     setInputText(input.target.value);
   };
+  const handleClick = () => {
+    setInputText("");
+  };
 
   return (
     <Container
@@ -43,6 +46,8 @@ const SearchForm = () => {
         variant="outlined"
         color="secondary"
         sx={{ width: "100px", py: 1 }}
+        title="Search"
+        onClick={handleClick}
       >
         <BsSearch size={18} />
       </Button>
