@@ -1,12 +1,14 @@
-import { createTheme } from "@mui/material/styles";
-import { amber, grey } from "@mui/material/colors";
-import { ThemeProvider } from "@emotion/react";
 import { motion } from "framer-motion";
 import Header from "./components/Header";
-// import axios from "axios";
-// import { useEffect } from "react";
+import axios from "axios";
+import { useEffect } from "react";
 import GallerySection from "./components/GallerySection";
 import SearchForm from "./components/SearchForm";
+import { useSetRecoilState } from "recoil";
+import { initialPhotoList } from "./store/photoApiCalls";
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "./components/theme/theme";
+import PhotoCounter from "./components/util/PhotoCounter";
 
 const initialLoad = {
   start: { opacity: 0 },
@@ -24,24 +26,12 @@ const initialLoad = {
 //   fetch: nodeFetch,
 // });
 const App = () => {
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       "https://api.unsplash.com/photos/" + process.env.REACT_APP_ACCESS_KEY
-  //     )
-  //     .then((res) => console.log(res));
-  // }, []);
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: grey[900],
-      },
-      secondary: {
-        main: amber[500],
-      },
-    },
-  });
+  const setInitialPhotoList = useSetRecoilState(initialPhotoList);
+  useEffect(() => {
+    axios
+      .get(`https://api.unsplash.com/photos?client_id=${process.env.REACT_APP_ACCESS_KEY}`)
+      .then(({ data }) => setInitialPhotoList(data));
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -53,6 +43,7 @@ const App = () => {
       >
         <Header />
         <SearchForm />
+        <PhotoCounter />
         <GallerySection />
       </motion.div>
     </ThemeProvider>

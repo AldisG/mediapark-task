@@ -1,10 +1,18 @@
 import { Grid, Box } from "@mui/material";
 import picDummy from "./pic.jpg";
-import { useState } from "react";
+import { FC, useState } from "react";
+import { Photo } from "../types/types";
 
-const Card = () => {
+type P = {
+  item: Photo
+}
+
+const Card: FC<P> = ({ item }) => {
   const [activeHover, setActiveHover] = useState(false);
+
   const handleClick = () => console.log("Clicked on pic: src:...");
+  const { urls } = item
+
   const CustomBox = (child: any) => (
     <Box
       sx={{
@@ -14,9 +22,9 @@ const Card = () => {
         p: 1,
         "&:hover": activeHover
           ? {
-              scale: "1.05",
-              zIndex: 10,
-            }
+            scale: "1.05",
+            zIndex: 10,
+          }
           : "",
       }}
     >
@@ -34,7 +42,7 @@ const Card = () => {
       md={3}
       sx={{ cursor: "pointer" }}
     >
-      {CustomBox(<img src={picDummy} alt="pic" width="100%" />)}
+      {CustomBox(<img src={urls.small} alt="pic" width="100%" />)}
     </Grid>
   );
 };
