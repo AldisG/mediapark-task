@@ -29,7 +29,9 @@ const App = () => {
   const setInitialPhotoList = useSetRecoilState(initialPhotoList);
   useEffect(() => {
     axios
-      .get(`https://api.unsplash.com/photos?client_id=${process.env.REACT_APP_ACCESS_KEY}`)
+      .get(
+        `https://api.unsplash.com/photos?client_id=${process.env.REACT_APP_ACCESS_KEY}`
+      )
       .then(({ data }) => setInitialPhotoList(data));
   }, []);
 

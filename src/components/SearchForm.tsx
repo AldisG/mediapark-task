@@ -31,7 +31,7 @@ const SearchForm = () => {
 
   // `https://api.unsplash.com/search/photos?page1&query=${inputText}&client_id=${process.env.REACT_APP_ACCESS_KEY}; rel="first", https://api.unsplash.com/search/photos?page2&query=${inputText}&client_id=${process.env.REACT_APP_ACCESS_KEY}; rel="last"`
   const handleClick = (e?: React.FormEvent<HTMLFormElement>) => {
-    e?.preventDefault()
+    e?.preventDefault();
     axios
       .get(
         `https://api.unsplash.com/search/photos?page1&query=${inputText}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
@@ -48,7 +48,7 @@ const SearchForm = () => {
   return (
     <Container
       maxWidth="lg"
-      sx={{ display: "flex", alignItems: "center", py: 3, gap: 2 }}
+      sx={{ display: "flex", alignItems: "center", pt: 3, gap: 2 }}
     >
       <form onSubmit={handleClick}>
         <FormControl>
