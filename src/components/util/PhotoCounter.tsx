@@ -1,18 +1,18 @@
 import { Typography } from "@mui/material";
-import { Container } from "@mui/system";
-import React from "react";
 import { useRecoilValue } from "recoil";
 import { totalAmountOfPics } from "../../store/photoApiCalls";
+import CommonWrapper from "./CommonWrapper";
 
 const PhotoCounter = () => {
-  const {totalPics, totalPages} = useRecoilValue(totalAmountOfPics);
+  const { totalPics, totalPages } = useRecoilValue(totalAmountOfPics);
   return (
-    <Container
-      maxWidth="lg"
-      sx={{ py: 1 }}
-    >
-      {totalPics > 0 && <Typography variant="body1" component="p">{totalPics} photos / {totalPages} pages</Typography>}
-    </Container>
+    <CommonWrapper>
+      {totalPics > 0 && (
+        <Typography variant="body1" component="p">
+          {totalPics} photos / {totalPages} pages
+        </Typography>
+      )}
+    </CommonWrapper>
   );
 };
 
