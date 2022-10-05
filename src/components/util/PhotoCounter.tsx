@@ -6,13 +6,15 @@ import CommonWrapper from "./CommonWrapper";
 const PhotoCounter = () => {
   const { totalPics, totalPages } = useRecoilValue(totalAmountOfPics);
   return (
-    <CommonWrapper>
-      {totalPics > 0 && (
+    <Container maxWidth="lg" sx={{ py: totalPics > 0 ? 1 : 0 }}>
+      {totalPics > 0 ? (
         <Typography variant="body1" component="p">
           {totalPics} photos / {totalPages} pages
         </Typography>
+      ) : (
+        ""
       )}
-    </CommonWrapper>
+    </Container>
   );
 };
 
