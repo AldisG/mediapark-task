@@ -1,56 +1,53 @@
 // import { useEffect } from "react";
-import {
-  Box,
-  Card,
-  Grid,
-  ImageList,
-  ImageListItem,
-  ImageListTypeMap,
-} from "@mui/material";
+import { Box, ImageListItem } from "@mui/material";
 import PhotoItem from "./PhotoItem";
 import { useRecoilValue } from "recoil";
 import { initialPhotoList, searchPhotoList } from "../store/photoApiCalls";
 import LoadingContent from "./util/LoadingContent";
 import NoItemsFound from "./util/NoItemsFound";
-import { OverridableComponent } from "@mui/material/OverridableComponent";
-import { FC } from "react";
+import ImageListWrapper from "./util/ImageListWrapper";
 
 const GallerySection = () => {
   const list = useRecoilValue(initialPhotoList);
   const searchList = useRecoilValue(searchPhotoList);
-  // list?.length === 0 &&
-
-  if (searchList && searchList?.length === 0) {
-    return <NoItemsFound />;
-  }
+  // if (searchList && searchList?.length === 0) {
+  //   return <NoItemsFound />;
+  // }
   if (!list && !searchList) {
     return <LoadingContent />;
   }
+  // can be refactored into 2 layer statement
   if (searchList) {
     return (
-      <Box width="100%">
-        <ImageList variant="masonry" cols={3}>
-          {searchList.map((item) => (
+      <>
+        {searchList.length > 0 ? (
+          <ImageListWrapper>
+            {searchList.map((item) => (
+              <ImageListItem key={item.id}>
+                <PhotoItem item={item} />
+              </ImageListItem>
+            ))}
+          </ImageListWrapper>
+        ) : (
+          <NoItemsFound />
+        )}
+      </>
+    );
+  }
+  return (
+    <>
+      {list && [].length > 0 ? (
+        <ImageListWrapper>
+          {list.map((item) => (
             <ImageListItem key={item.id}>
               <PhotoItem item={item} />
             </ImageListItem>
           ))}
-        </ImageList>
-      </Box>
-    );
-  }
-  return (
-    <Box width="100%">
-      <ImageList variant="masonry" cols={3}>
-        {list
-          ? list.map((item) => (
-              <ImageListItem key={item.id}>
-                <PhotoItem item={item} />
-              </ImageListItem>
-            ))
-          : ""}
-      </ImageList>
-    </Box>
+        </ImageListWrapper>
+      ) : (
+        <NoItemsFound />
+      )}
+    </>
   );
 };
 

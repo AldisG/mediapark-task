@@ -7,7 +7,7 @@ type P = {
 
 const CommonWrapper: FC<P> = ({ children }) => {
   return (
-    <Box sx={{ display: "flex", alignItems: "center", p: 3, gap: 2 }}>
+    <Box sx={{ display: "flex", alignItems: "center", px: 3, pt: 2, gap: 2 }}>
       {children}
     </Box>
   );
