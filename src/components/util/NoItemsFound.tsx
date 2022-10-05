@@ -4,7 +4,7 @@ import { Container } from '@mui/system'
 const NoItemsFound = () => {
   return (
     <Container
-    maxWidth="lg"
+    maxWidth="xl"
     sx={{ textAlign: 'center', py: 1}}
   >
     <Typography variant="h2" component="p">Sorry, no photos found!</Typography>
