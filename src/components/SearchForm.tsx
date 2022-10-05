@@ -1,5 +1,4 @@
 import {
-  Container,
   FormControl,
   FormHelperText,
   Input,
@@ -12,6 +11,7 @@ import LightButton from "./util/LightButton";
 import axios from "axios";
 import { searchPhotoList, totalAmountOfPics } from "../store/photoApiCalls";
 import { useSetRecoilState } from "recoil";
+import CommonWrapper from "./util/CommonWrapper";
 
 const SearchForm = () => {
   const [inputText, setInputText] = useState("");
@@ -46,10 +46,7 @@ const SearchForm = () => {
   };
 
   return (
-    <Container
-      maxWidth="lg"
-      sx={{ display: "flex", alignItems: "center", pt: 3, gap: 2 }}
-    >
+    <CommonWrapper>
       <form onSubmit={handleClick}>
         <FormControl>
           <InputLabel htmlFor="my-input">Search photos</InputLabel>
@@ -69,7 +66,7 @@ const SearchForm = () => {
       <LightButton inputText={inputText} handleClick={handleClick}>
         <BsSearch size={18} />
       </LightButton>
-    </Container>
+    </CommonWrapper>
   );
 };
 

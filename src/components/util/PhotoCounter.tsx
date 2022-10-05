@@ -1,8 +1,7 @@
 import { Typography } from "@mui/material";
-import { Container } from "@mui/system";
-import React from "react";
 import { useRecoilValue } from "recoil";
 import { totalAmountOfPics } from "../../store/photoApiCalls";
+import CommonWrapper from "./CommonWrapper";
 
 const PhotoCounter = () => {
   const { totalPics, totalPages } = useRecoilValue(totalAmountOfPics);
