@@ -1,12 +1,4 @@
-import {
-  Grid,
-  Box,
-  CardActions,
-  Card,
-  CardContent,
-  CardMedia,
-} from "@mui/material";
-import picDummy from "./pic.jpg";
+import { CardActions, Card, CardMedia } from "@mui/material";
 import { FC, useState } from "react";
 import { Photo } from "../types/types";
 import CardCloseup from "./CardCloseup";
@@ -16,25 +8,22 @@ type P = {
 };
 
 const PhotoItem: FC<P> = ({ item }) => {
-  const [activeHover, setActiveHover] = useState(false);
-
-  const handleClick = () => console.log("Clicked on pic: src:...");
   const { urls } = item;
+  const [openWindow, setopenWindow] = useState(false);
+  const handleOpenWindow = () => setopenWindow(true);
+  const handleCloseWindow = () => setopenWindow(false);
 
-  // </CardCloseup> padot item nepieciesamo
   return (
-    <CardCloseup>
+    <>
       <Card
         elevation={5}
+        onClick={() => handleOpenWindow()}
         sx={{
           maxWidth: "100%",
           height: "max-content",
         }}
       >
         <CardActions
-          onMouseLeave={() => setActiveHover(false)}
-          onMouseEnter={() => setActiveHover(true)}
-          onClick={handleClick}
           sx={{
             cursor: "pointer",
             transition: "scale .3s",
@@ -51,21 +40,9 @@ const PhotoItem: FC<P> = ({ item }) => {
           />
         </CardActions>
       </Card>
-    </CardCloseup>
+      <CardCloseup handleCloseWindow={handleCloseWindow} openWindow={openWindow} item={item} />
+    </>
   );
 };
 
 export default PhotoItem;
-
-// <Grid
-// onMouseLeave={() => setActiveHover(false)}
-// onMouseEnter={() => setActiveHover(true)}
-// onClick={handleClick}
-// item
-// xs={6}
-// sm={4}
-// md={3}
-// sx={{ cursor: "pointer" }}
-// >
-// {CustomBox(<img src={urls.small} alt="pic" width="100%" />)}
-// </Grid>

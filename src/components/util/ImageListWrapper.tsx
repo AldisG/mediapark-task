@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from "react";
-import { Box, ImageList } from "@mui/material";
+import { Box, ImageList, ImageListItem } from "@mui/material";
+import { motion } from "framer-motion";
+import PhotoItem from "../PhotoItem";
+import NoItemsFound from "./NoItemsFound";
+import { Photo } from "../../types/types";
 
 type P = {
-  children: React.ReactNode[];
-};
-const getViewW = () => {
-  const { innerWidth: width } = window;
-  return width;
+  items: Photo[];
 };
 
 const muiBreakPoints = [
@@ -17,7 +17,11 @@ const muiBreakPoints = [
   { size: 1536 },
 ];
 
-const ImageListWrapper: FC<P> = ({ children }) => {
+const ImageListWrapper: FC<P> = ({ items }) => {
+  const getViewW = () => {
+    const { innerWidth: width } = window;
+    return width;
+  };
   const [w, setw] = useState(0);
   const [decideColCount, setdecideColCount] = useState(1);
 
@@ -30,7 +34,6 @@ const ImageListWrapper: FC<P> = ({ children }) => {
   const calcColCount = () => {
     muiBreakPoints.forEach(({ size }, index: number, muiBreakPoints) => {
       const lastItem = () => {
-
         if (muiBreakPoints[index + 1]) {
           return muiBreakPoints[index + 1].size;
         }
@@ -48,16 +51,40 @@ const ImageListWrapper: FC<P> = ({ children }) => {
     calcColCount();
   }, [w]);
 
+  useEffect(() => {
+    setw(getViewW());
+    calcColCount();
+  }, []);
+
+  const initialLoad = {
+    start: { opacity: 0 },
+    end: { opacity: 1 },
+  };
+
   return (
-    <Box width="100%">
-      <ImageList
-        variant="masonry"
-        cols={decideColCount}
-        sx={{ px: 3, py: 1 }}
-      >
-        {children}
-      </ImageList>
-    </Box>
+    <motion.div
+      variants={initialLoad}
+      initial={initialLoad.start}
+      animate={initialLoad.end}
+    >
+      {items ? (
+        <Box width="100%">
+          <ImageList
+            variant="masonry"
+            cols={decideColCount}
+            sx={{ px: 3, py: 1 }}
+          >
+            {items.map((item) => (
+              <ImageListItem key={item.id}>
+                <PhotoItem item={item} />
+              </ImageListItem>
+            ))}
+          </ImageList>
+        </Box>
+      ) : (
+        <NoItemsFound />
+      )}
+    </motion.div>
   );
 };
 

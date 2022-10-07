@@ -11,7 +11,7 @@ const PhotoCounter = () => {
       <CommonWrapper>
         {totalPics > 0 ? (
           <Typography variant="body1" component="p">
-            {totalPics} photos / {totalPages} pages
+            <b>Found:</b> {totalPics} photos / {totalPages} pages
           </Typography>
         ) : (
           ""

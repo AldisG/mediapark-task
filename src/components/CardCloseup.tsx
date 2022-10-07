@@ -1,36 +1,79 @@
 import {
   Box,
   Button,
+  Card,
+  CardMedia,
   Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
+  Typography,
 } from "@mui/material";
-import { FC, useState } from "react";
+import { FC } from "react";
+import { AiFillCloseCircle } from "react-icons/ai";
+import { Photo } from "../types/types";
 
 type P = {
-  children: React.ReactNode;
+  item: Photo;
+  openWindow: boolean;
+  handleCloseWindow: () => void;
 };
 
-const CardCloseup: FC<P> = ({ children }) => {
-  const [openWindow, setopenWindow] = useState(false);
-  const handleOpenWindow = () => setopenWindow(!openWindow);
+const CardCloseup: FC<P> = ({ item, openWindow, handleCloseWindow }) => {
+  const { description, urls, alt_description, id } = item;
+
   return (
-    <Box onClick={handleOpenWindow}>
-      {children}
+    <>
       <Dialog
         open={openWindow}
-        onClose={handleOpenWindow}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        maxWidth="lg"
+        onClose={handleCloseWindow}
       >
-        <DialogTitle id="alert-dialog-title">Title of the photo</DialogTitle>
-        <Button onClick={handleOpenWindow} autoFocus>
-          X
-        </Button>
+        <Box
+          sx={{
+            p: 2,
+            display: "grid",
+            justifyContent: "center",
+            gap: 1,
+            position: "relative",
+          }}
+        >
+          {description && (
+            <Typography variant="h4" fontWeight="bold">
+              {description}
+            </Typography>
+          )}
+          {alt_description && (
+            <Typography variant="body2">{alt_description}</Typography>
+          )}
+          <Card elevation={5}>
+              <CardMedia
+                component="img"
+                height="auto"
+                image={urls.regular}
+                alt={alt_description || `photo ID: ${id}`}
+              />
+          </Card>
+
+          <Typography variant="body2">
+            To downlad - rightclick on photo and select "Save image as"
+          </Typography>
+          <Button
+            sx={{
+              fontWeight: "bold",
+              position: "absolute",
+              top: 0,
+              right: 0,
+              borderRadius: "100px",
+            }}
+            onClick={handleCloseWindow}
+            color="secondary"
+            autoFocus
+          >
+            <AiFillCloseCircle size={50} />
+          </Button>
+        </Box>
       </Dialog>
-    </Box>
+    </>
   );
 };
 

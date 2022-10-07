@@ -30,9 +30,17 @@ const App = () => {
   useEffect(() => {
     axios
       .get(
-        `https://api.unsplash.com/photos?client_id=${process.env.REACT_APP_ACCESS_KEY}`
+        `https://api.unsplash.com/photos?page=2&client_id=${process.env.REACT_APP_ACCESS_KEY}`,
+        {
+          headers: {
+            "x-per-page": "20",
+          },
+        }
       )
-      .then(({ data }) => setInitialPhotoList(data));
+      .then((res) => {
+        console.log(res);
+        setInitialPhotoList(res.data);
+      });
   }, []);
 
   return (
