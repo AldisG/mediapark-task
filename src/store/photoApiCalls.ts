@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, selector, useRecoilState, useRecoilValue } from "recoil";
 import { Photo } from "../types/types";
 
 export const initialPhotoList = atom<undefined | Photo[]>({
@@ -10,16 +10,12 @@ export const totalAmountOfPics = atom<{
   totalPics: number;
   totalPages: number;
 }>({
-  key: "totalAmountOfPics",
+  key: "totalAmountOfPics", // unique ID (with respect to other atoms/selectors)
   default: { totalPics: 0, totalPages: 0 },
 });
 
 export const searchPhotoList = atom<undefined | Photo[]>({
-  key: "searchPhotoList",
+  key: "searchPhotoList", // unique ID (with respect to other atoms/selectors)
   default: undefined,
 });
-
-export const currentPageNumber = atom({
-  key: "currentPageNumber",
-  default: 1,
-});
+// Link: <https://api.unsplash.com/search/photos?page=1&query=office>; rel="first", <https://api.unsplash.com/search/photos?page=1&query=office>; rel="prev", <https://api.unsplash.com/search/photos?page=3&query=office>; rel="last", <https://api.unsplash.com/search/photos?page=3&query=office>; rel="next"
