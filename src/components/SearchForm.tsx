@@ -19,9 +19,10 @@ const SearchForm = () => {
   const setTotalAmountOfPics = useSetRecoilState(totalAmountOfPics);
   const setSearchPhotoList = useSetRecoilState(searchPhotoList);
 
+  // make adaptive
+  const currentPage = 1
   // todo: on timer, show 5 auto complete suggestions
   // todo: remember search queries you entered - local storage
-  // use RecoilJs to submit amount of items found and display in another component
 
   const handleChange = (
     input: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -29,16 +30,14 @@ const SearchForm = () => {
     setInputText(input.target.value);
   };
 
-  // `https://api.unsplash.com/search/photos?page1&query=${inputText}&client_id=${process.env.REACT_APP_ACCESS_KEY}; rel="first", https://api.unsplash.com/search/photos?page2&query=${inputText}&client_id=${process.env.REACT_APP_ACCESS_KEY}; rel="last"`
   const handleClick = (e?: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
     axios
       .get(
-        `https://api.unsplash.com/search/photos?page1&query=${inputText}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
+        `https://api.unsplash.com/search/photos?page=${currentPage}&query=${inputText}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
       )
       .then(({ data }) => {
         const { total, total_pages, results } = data;
-        console.log(data);
         setSearchPhotoList(results);
         setTotalAmountOfPics({ totalPics: total, totalPages: total_pages });
       });
