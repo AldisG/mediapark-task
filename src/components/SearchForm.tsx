@@ -1,17 +1,17 @@
-import {
-  FormControl,
-  FormHelperText,
-  Input,
-  InputLabel,
-} from "@mui/material";
+import { FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
 import { BsSearch } from "react-icons/bs";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LightButton from "./util/LightButton";
-// import { useEffect } from "react";
 import axios from "axios";
 import { searchPhotoList, totalAmountOfPics } from "../store/photoApiCalls";
 import { useSetRecoilState } from "recoil";
 import CommonWrapper from "./util/CommonWrapper";
+import {
+  initializeLocalStorage,
+  locStorageItems,
+  setStorageItems,
+} from "./funcs/storeActions";
+// import { initializeLocalStorage, locStorageItems } from "./funcs/storeActions";
 
 const SearchForm = () => {
   const [inputText, setInputText] = useState("");
@@ -20,9 +20,8 @@ const SearchForm = () => {
   const setSearchPhotoList = useSetRecoilState(searchPhotoList);
 
   // make adaptive
-  const currentPage = 1
+  const currentPage = 1;
   // todo: on timer, show 5 auto complete suggestions
-  // todo: remember search queries you entered - local storage
 
   const handleChange = (
     input: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -41,6 +40,7 @@ const SearchForm = () => {
         setSearchPhotoList(results);
         setTotalAmountOfPics({ totalPics: total, totalPages: total_pages });
       });
+    setStorageItems(inputText);
     setInputText("");
   };
 
