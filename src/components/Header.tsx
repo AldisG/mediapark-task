@@ -6,7 +6,7 @@ import { AiOutlineQuestionCircle } from "react-icons/ai";
 import ApiAsigner from "./util/ApiAsigner";
 
 const Header = () => {
-  const [openDrawer, setOpenDrawer] = useState(true)
+  const [openDrawer, setOpenDrawer] = useState(false)
 
   return (
     <AppBar color={"primary"} position="static">
