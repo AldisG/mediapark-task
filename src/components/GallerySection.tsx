@@ -1,24 +1,25 @@
-// import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { initialPhotoList, searchPhotoList } from "../store/photoApiCalls";
 import LoadingContent from "./util/LoadingContent";
 import ImageListWrapper from "./util/ImageListWrapper";
+import NoItemsFound from "./util/NoItemsFound";
 
 const GallerySection = () => {
   const list = useRecoilValue(initialPhotoList);
   const searchList = useRecoilValue(searchPhotoList);
 
-  // fix this
+// fix this
   if (!list && !searchList) {
-    return <LoadingContent />;
+    return <NoItemsFound />;
   }
 
-  if (searchList) {
+  if (searchList && searchList.length > 0) {
     return <ImageListWrapper items={searchList} />;
   }
+
   return (
     <>
-      {list && (
+      {list && !searchList && (
         <ImageListWrapper items={list} />
       )}
     </>
