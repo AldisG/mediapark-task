@@ -2,16 +2,13 @@ import { FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
 import { BsSearch } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import LightButton from "./util/LightButton";
-import axios from "axios";
-import { searchPhotoList, totalAmountOfPics } from "../store/photoApiCalls";
-import { useSetRecoilState } from "recoil";
+import { currentPageNumber, searchPhotoList, totalAmountOfPics } from "../store/photoApiCalls";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import CommonWrapper from "./util/CommonWrapper";
 import {
-  initializeLocalStorage,
-  locStorageItems,
   setStorageItems,
 } from "./funcs/storeActions";
-// import { initializeLocalStorage, locStorageItems } from "./funcs/storeActions";
+import { fetchPhotoData } from "./funcs/axiosCalls";
 
 const SearchForm = () => {
   const [inputText, setInputText] = useState("");
@@ -19,8 +16,8 @@ const SearchForm = () => {
   const setTotalAmountOfPics = useSetRecoilState(totalAmountOfPics);
   const setSearchPhotoList = useSetRecoilState(searchPhotoList);
 
-  // make adaptive
-  const currentPage = 1;
+  const currentPage = useRecoilValue(currentPageNumber);
+  const setCurrentPage = useSetRecoilState(currentPageNumber)
   // todo: on timer, show 5 auto complete suggestions
 
   const handleChange = (
@@ -31,18 +28,36 @@ const SearchForm = () => {
 
   const handleClick = (e?: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
-    axios
-      .get(
-        `https://api.unsplash.com/search/photos?page=${currentPage}&query=${inputText}&client_id=${process.env.REACT_APP_ACCESS_KEY}`
-      )
-      .then(({ data }) => {
-        const { total, total_pages, results } = data;
-        setSearchPhotoList(results);
-        setTotalAmountOfPics({ totalPics: total, totalPages: total_pages });
-      });
-    setStorageItems(inputText);
-    setInputText("");
+    if (inputText) {
+      setCurrentPage(1)
+      fetchPhotoData(
+        setSearchPhotoList,
+        setTotalAmountOfPics,
+        setStorageItems,
+        currentPage,
+        inputText
+      );
+    }
   };
+
+  const handleSelectText = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    const target = e.target as HTMLInputElement;
+    target.select();
+  };
+
+  useEffect(() => {
+    if (inputText) {
+      fetchPhotoData(
+        setSearchPhotoList,
+        setTotalAmountOfPics,
+        setStorageItems,
+        currentPage,
+        inputText
+      );
+    }
+  }, [currentPage]);
 
   return (
     <CommonWrapper>
@@ -55,10 +70,12 @@ const SearchForm = () => {
             placeholder="Rainy day"
             value={inputText}
             onChange={handleChange}
+            onClick={handleSelectText}
           />
           <FormHelperText id="search-input-helper-text" sx={{ opacity: 0.6 }}>
             You can find all kinds of photos here!
           </FormHelperText>
+          {/* Suggestions goes here */}
         </FormControl>
       </form>
 
