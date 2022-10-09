@@ -8,17 +8,15 @@ const GallerySection = () => {
   const list = useRecoilValue(initialPhotoList);
   const searchList = useRecoilValue(searchPhotoList);
 
-  if (searchList?.length === 0) {
-    return <NoItemsFound />
-  }
-
+// fix this
   if (!list && !searchList) {
-    return <LoadingContent />;
+    return <NoItemsFound />;
   }
 
   if (searchList && searchList.length > 0) {
     return <ImageListWrapper items={searchList} />;
   }
+
   return (
     <>
       {list && !searchList && (

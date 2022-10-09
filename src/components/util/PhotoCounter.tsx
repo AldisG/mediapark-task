@@ -2,22 +2,22 @@ import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRecoilValue } from "recoil";
 import { totalAmountOfPics } from "../../store/photoApiCalls";
-import CommonWrapper from "./CommonWrapper";
+import PageSwitcherWrapper from "./PageSwitcherWrapper";
 
 const PhotoCounter = () => {
-  const { totalPics, totalPages } = useRecoilValue(totalAmountOfPics);
+  const { totalPics } = useRecoilValue(totalAmountOfPics);
+
   return (
-    <Box>
-      <CommonWrapper>
-        {totalPics > 0 ? (
-          <Typography variant="body1" component="p">
-            <b>Found:</b> {totalPics} photos / {totalPages} pages
-          </Typography>
-        ) : (
-          ""
-        )}
-      </CommonWrapper>
+    <>
+    {totalPics > 0 ? (
+    <Box sx={{display: 'grid', justifyContent: 'center', textAlign: 'center', gap: 1}}>
+      <PageSwitcherWrapper />
+      <Typography component="p" variant="caption" color="#33333366">
+        {`Found ${totalPics} photo${totalPics > 1 ? "s" : ''}`}
+      </Typography>
     </Box>
+    ) : ''}
+    </>
   );
 };
 

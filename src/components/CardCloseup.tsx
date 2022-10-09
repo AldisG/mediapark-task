@@ -9,6 +9,7 @@ import {
 import { FC } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { Photo } from "../types/types";
+import CloseButton from "./CloseButton";
 
 type P = {
   item: Photo;
@@ -23,17 +24,15 @@ const CardCloseup: FC<P> = ({ item, openWindow, handleCloseWindow }) => {
     <Box>
       <Dialog
         open={openWindow}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        maxWidth="lg"
+        maxWidth="md"
         onClose={handleCloseWindow}
       >
         <Box
           sx={{
-            p: 2,
+            p: 8,
             display: "grid",
             justifyContent: "center",
-            gap: 1,
+            gap: 2,
             position: "relative",
           }}
         >
@@ -60,20 +59,8 @@ const CardCloseup: FC<P> = ({ item, openWindow, handleCloseWindow }) => {
             To downlad - rightclick on photo and select "Save image as"
           </Typography>
         </Box>
-        <Button
-          sx={{
-            fontWeight: "bold",
-            position: "absolute",
-            top: 0,
-            right: 0,
-            borderRadius: "100px",
-          }}
-          onClick={handleCloseWindow}
-          color="secondary"
-          autoFocus
-        >
-          <AiFillCloseCircle size={50} />
-        </Button>
+
+        <CloseButton handleCloseWindow={handleCloseWindow} />
       </Dialog>
     </Box>
   );
