@@ -2,22 +2,27 @@ import { FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
 import { BsSearch } from "react-icons/bs";
 import { useState, useEffect } from "react";
 import LightButton from "./util/LightButton";
-import { currentPageNumber, searchPhotoList, totalAmountOfPics } from "../store/photoApiCalls";
+import {
+  currentPageNumber,
+  searchPhotoList,
+  setUnsafeApiKey,
+  totalAmountOfPics,
+} from "../store/photoApiCalls";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import CommonWrapper from "./util/CommonWrapper";
-import {
-  setStorageItems,
-} from "./funcs/storeActions";
+import { setStorageItems } from "./funcs/storeActions";
 import { fetchPhotoData } from "./funcs/axiosCalls";
 
 const SearchForm = () => {
   const [inputText, setInputText] = useState("");
+  const [apiError, setApiError] = useState(false);
 
   const setTotalAmountOfPics = useSetRecoilState(totalAmountOfPics);
   const setSearchPhotoList = useSetRecoilState(searchPhotoList);
+  const customApiKey = useRecoilValue(setUnsafeApiKey);
 
   const currentPage = useRecoilValue(currentPageNumber);
-  const setCurrentPage = useSetRecoilState(currentPageNumber)
+  const setCurrentPage = useSetRecoilState(currentPageNumber);
   // todo: on timer, show 5 auto complete suggestions
 
   const handleChange = (
@@ -29,13 +34,15 @@ const SearchForm = () => {
   const handleClick = (e?: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
     if (inputText) {
-      setCurrentPage(1)
+      setCurrentPage(1);
       fetchPhotoData(
         setSearchPhotoList,
         setTotalAmountOfPics,
         setStorageItems,
         currentPage,
-        inputText
+        inputText,
+        customApiKey,
+        setApiError
       );
     }
   };
@@ -54,10 +61,12 @@ const SearchForm = () => {
         setTotalAmountOfPics,
         setStorageItems,
         currentPage,
-        inputText
+        inputText,
+        customApiKey,
+        setApiError
       );
     }
-  }, [currentPage]);
+  }, [currentPage, customApiKey]);
 
   return (
     <CommonWrapper>
