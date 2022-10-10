@@ -12,6 +12,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import CommonWrapper from "./util/CommonWrapper";
 import { setStorageItems } from "./funcs/storeActions";
 import { fetchPhotoData } from "./funcs/axiosCalls";
+import SuggestSearchQueries from "./util/SuggestSearchQueries";
 
 type P = {
   setApiError: (value: boolean) => void
@@ -19,14 +20,19 @@ type P = {
 
 const SearchForm: FC<P> = ({ setApiError }) => {
   const [inputText, setInputText] = useState("");
-
+  const [randomAtParent, setrandomAtParent] = useState<boolean>(false);
+  const [showSuggestions, setshowSuggestions] = useState(false)
+  
   const setTotalAmountOfPics = useSetRecoilState(totalAmountOfPics);
   const setSearchPhotoList = useSetRecoilState(searchPhotoList);
   const customApiKey = useRecoilValue(setUnsafeApiKey);
 
   const currentPage = useRecoilValue(currentPageNumber);
   const setCurrentPage = useSetRecoilState(currentPageNumber);
-  // todo: on timer, show 5 auto complete suggestions
+
+  const handleClickedText = ((value: string) => {
+    setInputText(value)
+  })
 
   const handleChange = (
     input: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -36,6 +42,7 @@ const SearchForm: FC<P> = ({ setApiError }) => {
 
   const handleClick = (e?: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault();
+    setrandomAtParent(prev => !prev)
     if (inputText) {
       setCurrentPage(1);
       fetchPhotoData(
@@ -74,7 +81,7 @@ const SearchForm: FC<P> = ({ setApiError }) => {
   return (
     <CommonWrapper>
       <form onSubmit={handleClick}>
-        <FormControl>
+        <FormControl sx={{ position: 'relative '}}>
           <InputLabel htmlFor="my-input">Search photos</InputLabel>
           <Input
             id="search-input"
@@ -83,15 +90,17 @@ const SearchForm: FC<P> = ({ setApiError }) => {
             value={inputText}
             onChange={handleChange}
             onClick={handleSelectText}
+            onFocus={() => setshowSuggestions(true)}
+            onBlur={() => setshowSuggestions(false)}
           />
           <FormHelperText id="search-input-helper-text" sx={{ opacity: 0.6 }}>
             You can find all kinds of photos here!
           </FormHelperText>
-          {/* Suggestions goes here */}
+          {showSuggestions && <SuggestSearchQueries randomAtParent={randomAtParent}/>}
         </FormControl>
       </form>
 
-      <LightButton inputText={inputText} handleClick={handleClick}>
+      <LightButton inputText={inputText} handleClick={handleClick} >
         <BsSearch size={18} />
       </LightButton>
     </CommonWrapper>

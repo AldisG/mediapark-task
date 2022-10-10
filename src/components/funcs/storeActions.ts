@@ -1,5 +1,5 @@
 const searchQueries = "search-queries";
-const foundData = localStorage.getItem(searchQueries);
+const foundData = window.localStorage.getItem(searchQueries);
 
 const oldData: string[] = [];
 
@@ -9,13 +9,13 @@ export const locStorageItems = foundData
 
 export const initializeLocalStorage = () => {
   if (foundData === null) {
-    localStorage.setItem(searchQueries, "[]");
+    window.localStorage.setItem(searchQueries, "[]");
   }
 };
 
 export const setStorageItems = (value: string) => {
   if (foundData === null) {
-    localStorage.setItem(searchQueries, "[]");
+    window.localStorage.setItem(searchQueries, "[]");
   }
 
   initializeLocalStorage();
@@ -27,7 +27,5 @@ export const setStorageItems = (value: string) => {
     .filter((item: string, i: number) => {
       return oldData.indexOf(item) === i;
     })
-    // .filter((_, i) => i <= 4);
-
-  localStorage.setItem(searchQueries, JSON.stringify(cleanData.slice(-5, cleanData.length)));
+  window.localStorage.setItem(searchQueries, JSON.stringify(cleanData.slice(-5, cleanData.length)));
 };

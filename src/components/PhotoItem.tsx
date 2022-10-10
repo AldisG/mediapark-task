@@ -36,11 +36,15 @@ const PhotoItem: FC<P> = ({ item }) => {
             component="img"
             height="auto"
             image={urls.small}
-            alt="view?"
+            alt={item.alt_description || "photo"}
           />
         </CardActions>
       </Card>
-      <CardCloseup handleCloseWindow={handleCloseWindow} openWindow={openWindow} item={item} />
+      <CardCloseup
+        handleCloseWindow={handleCloseWindow}
+        openWindow={openWindow}
+        item={item}
+      />
     </>
   );
 };

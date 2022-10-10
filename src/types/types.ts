@@ -10,7 +10,6 @@ export type Photo = {
   liked_by_user: boolean;
   likes: number;
   links: Links;
-  // promoted_at: boolean;
   sponsorship: Sponsorship;
   topic_submissions: any;
   updated_at: string;

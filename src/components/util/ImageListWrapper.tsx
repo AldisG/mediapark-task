@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import PhotoItem from "../PhotoItem";
 import NoItemsFound from "./NoItemsFound";
 import { Photo } from "../../types/types";
+import LoadingContent from "./LoadingContent";
 
 type P = {
   items: Photo[];
@@ -76,7 +77,9 @@ const ImageListWrapper: FC<P> = ({ items }) => {
           >
             {items.map((item) => (
               <ImageListItem key={item.id}>
-                <PhotoItem item={item} />
+                <PhotoItem
+                  item={item}
+                />
               </ImageListItem>
             ))}
           </ImageList>
