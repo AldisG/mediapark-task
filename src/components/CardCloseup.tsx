@@ -17,7 +17,7 @@ const CardCloseup: FC<P> = ({ item, openWindow, handleCloseWindow }) => {
       <Dialog open={openWindow} maxWidth="md" onClose={handleCloseWindow}>
         <Box
           sx={{
-            p: 8,
+            p: { xs: 2, md: 8 },
             display: "grid",
             justifyContent: "center",
             gap: 2,
@@ -26,7 +26,7 @@ const CardCloseup: FC<P> = ({ item, openWindow, handleCloseWindow }) => {
         >
           <Box sx={{ maxWidth: "90%" }}>
             {description && (
-              <Typography variant="h4" fontWeight="bold">
+              <Typography variant="h5" fontWeight="bold">
                 {description}
               </Typography>
             )}

@@ -1,6 +1,6 @@
 import { FormControl, FormHelperText, Input, InputLabel } from "@mui/material";
 import { BsSearch } from "react-icons/bs";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import LightButton from "./util/LightButton";
 import {
   currentPageNumber,
@@ -13,9 +13,12 @@ import CommonWrapper from "./util/CommonWrapper";
 import { setStorageItems } from "./funcs/storeActions";
 import { fetchPhotoData } from "./funcs/axiosCalls";
 
-const SearchForm = () => {
+type P = {
+  setApiError: (value: boolean) => void
+}
+
+const SearchForm: FC<P> = ({ setApiError }) => {
   const [inputText, setInputText] = useState("");
-  const [apiError, setApiError] = useState(false);
 
   const setTotalAmountOfPics = useSetRecoilState(totalAmountOfPics);
   const setSearchPhotoList = useSetRecoilState(searchPhotoList);

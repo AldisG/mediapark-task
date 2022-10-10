@@ -34,7 +34,7 @@ const App = () => {
         className="App"
       >
         <Header />
-        <SearchForm />
+        <SearchForm setApiError={setApiError} />
         <PhotoCounter />
         {apiError ? <ApiError /> : <GallerySection />}
       </motion.div>
