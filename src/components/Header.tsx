@@ -1,20 +1,22 @@
+
 import { AppBar, MenuItem } from "@mui/material";
 import { Box } from "@mui/system";
+import { useState } from "react";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
-// import React from "react";
+import ApiAsigner from "./util/ApiAsigner";
 
 const Header = () => {
-  const handleOpenHelpMidal = () => {
-    console.log("Create HELP modal!");
-  };
+  const [openDrawer, setOpenDrawer] = useState(false)
+
   return (
     <AppBar color={"primary"} position="static">
       <Box display="flex" justifyContent="space-between">
         <MenuItem title="Why you are hovering on me?">PicFinder</MenuItem>
-        <MenuItem onClick={handleOpenHelpMidal}>
+        <MenuItem onClick={() => setOpenDrawer(true)}>
           <AiOutlineQuestionCircle size={25} title="Need help?" />
         </MenuItem>
       </Box>
+      <ApiAsigner openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} />
     </AppBar>
   );
 };

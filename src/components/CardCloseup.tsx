@@ -1,13 +1,5 @@
-import {
-  Box,
-  Button,
-  Card,
-  CardMedia,
-  Dialog,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardMedia, Dialog, Typography } from "@mui/material";
 import { FC } from "react";
-import { AiFillCloseCircle } from "react-icons/ai";
 import { Photo } from "../types/types";
 import CloseButton from "./CloseButton";
 
@@ -22,14 +14,10 @@ const CardCloseup: FC<P> = ({ item, openWindow, handleCloseWindow }) => {
 
   return (
     <Box>
-      <Dialog
-        open={openWindow}
-        maxWidth="md"
-        onClose={handleCloseWindow}
-      >
+      <Dialog open={openWindow} maxWidth="md" onClose={handleCloseWindow}>
         <Box
           sx={{
-            p: 8,
+            p: { xs: 2, md: 8 },
             display: "grid",
             justifyContent: "center",
             gap: 2,
@@ -38,7 +26,7 @@ const CardCloseup: FC<P> = ({ item, openWindow, handleCloseWindow }) => {
         >
           <Box sx={{ maxWidth: "90%" }}>
             {description && (
-              <Typography variant="h4" fontWeight="bold">
+              <Typography variant="h5" fontWeight="bold">
                 {description}
               </Typography>
             )}

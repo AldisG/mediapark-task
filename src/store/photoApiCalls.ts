@@ -23,3 +23,8 @@ export const currentPageNumber = atom({
   key: "currentPageNumber",
   default: 1,
 });
+
+export const setUnsafeApiKey = atom({
+  key: "setUnsafeApiKey",
+  default: "",
+});
